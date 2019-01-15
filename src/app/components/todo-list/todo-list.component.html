@@ -1,0 +1,53 @@
+<div fxLayout="row" fxLayoutAlign="center start" class="container-fluid">
+
+  <div fxLayout="column" fxLayoutGap="20px" fxFlex="600px">
+
+    <h3>To do</h3>
+    <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="space-between">
+      <input type="text" [(ngModel)]="message" class="form-control" />
+      <button class="btn btn-primary" (click)="addTodo()">Ajouter</button>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="space-between">
+      <h4>Liste des tâches
+        <button class="todos-filter" mat-icon-button [matMenuTriggerFor]="todosFilter">
+          <fa-icon icon="filter"></fa-icon>
+        </button>
+        <mat-menu #todosFilter="matMenu" >
+          <button mat-menu-item (click)="filterTodos('ALL')" [ngClass]="{ active: todos.filter === 'ALL' }">
+            <mat-icon>
+              <fa-icon icon="tasks"></fa-icon>
+            </mat-icon>
+            <span>{{ 'ALL' }}</span>
+          </button>
+          <button mat-menu-item (click)="filterTodos('DONE')" [ngClass]="{ active: todos.filter === 'DONE' }">
+            <mat-icon>
+              <fa-icon icon="check"></fa-icon>
+            </mat-icon>
+            <span>{{ 'DONE' }}</span>
+          </button>
+          <button mat-menu-item (click)="filterTodos('ACTIVE')" [ngClass]="{ active: todos.filter === 'ACTIVE' }">
+            <mat-icon>
+              <fa-icon icon="square"></fa-icon>
+            </mat-icon>
+            <span>{{ 'ACTIVE' }}</span>
+          </button>
+        </mat-menu>
+      </h4>
+    </div>
+  
+    <ul class="list-group">
+      <li [routerLink]="['/todos', todo.id]" *ngFor="let todo of filteredTodos; let i = index;" class="list-group-item"
+        fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="center center">
+        <i class="material-icons">{{ todo.done ? 'check_box' : 'check_box_outline_blank'}}</i>
+        <span fxFlex="auto">{{ todo.message }}</span>
+        <button class="btn btn-success" (click)="toggleTodo(i)">toogle</button>
+        <button class="btn btn-danger" (click)="deleteTodo(i)">Supprimer</button>
+      </li>
+    </ul>
+
+    <hr>
+
+    <div *ngIf="selectedTodo$ | async; let selectedTodo">{{ selectedTodo.message }}</div>
+  </div>
+</div>

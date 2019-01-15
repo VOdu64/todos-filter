@@ -1,0 +1,7 @@
+.todos-filter {
+  float: right;
+  position: relative;
+  left: 10px;
+  top: -5px;
+  margin-left: -10px;
+}
